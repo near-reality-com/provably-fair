@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Near Reality - Provably Fair Mines</title>
+  <meta name="description" content="Verify a Near Reality mines layout from client seed, revealed server seed, nonce, and mine count.">
+  <link rel="icon" href="./assets/nav-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./">
+        <img src="./assets/nav-logo.png" alt="Near Reality">
+        <span class="brand-copy">
+          <strong>Near Reality</strong>
+          <span>Provably fair mines</span>
+        </span>
+      </a>
+      <nav>
+        <a href="./">Home</a>
+        <a href="./dice.html">Dice</a>
+        <a class="active" href="./mines.html">Mines</a>
+        <a href="https://github.com/near-reality-com/provably-fair" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <p class="kicker">Mines</p>
+        <h1>Provably fair mines verifier</h1>
+        <p class="lede">
+          Paste the revealed server seed, your client seed, the nonce, and the mine count from that round.
+          The 5x5 layout is rebuilt with the same Fisher-Yates stream used by the game server.
+        </p>
+      </section>
+
+      <section class="panel">
+        <form id="mines-form" class="grid" autocomplete="off">
+          <label>Client seed
+            <input id="client" type="text" required placeholder="Your client seed">
+          </label>
+          <label>Server seed (revealed)
+            <input id="server" type="text" required spellcheck="false" placeholder="64-character hex">
+          </label>
+          <label>Nonce (game #)
+            <input id="nonce" type="number" min="0" step="1" value="0" required>
+          </label>
+          <label># of mines
+            <input id="mines" type="number" min="1" max="24" value="3" required>
+          </label>
+          <label>Published server hash (optional)
+            <input id="hash" type="text" spellcheck="false" placeholder="SHA-256 of the server seed">
+          </label>
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Reveal layout</button>
+            <button class="btn btn-ghost" id="copy-link" type="button">Copy link</button>
+          </div>
+        </form>
+        <div id="status" class="status" hidden></div>
+      </section>
+
+      <section id="result" class="result" hidden>
+        <div id="board" class="board" aria-label="Mines layout"></div>
+        <div class="proof">
+          <div>
+            <strong>Mine tiles (0-24, row-major)</strong>
+            <span id="mine-list" class="meta"></span>
+          </div>
+          <div>
+            <strong>SHA-256(server seed)</strong>
+            <span id="server-hash" class="meta"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes">
+        <p>
+          Algorithm: fill tiles <code>0..24</code>, then Fisher-Yates shuffle using
+          <code>SHA-256(client_seed:server_seed:nonce:blockIndex)</code> as a 4-byte stream
+          with rejection sampling. The first <code>mineCount</code> tiles after the shuffle are mines.
+        </p>
+        <p>
+          Query params: <code>client_seed</code>, <code>server_seed</code>, <code>nonce</code>, <code>mines</code>, <code>hash</code>.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Runs entirely in your browser. Same math as <code>CasinoFairness.generateMineTiles</code>.</p>
+      <p><a href="https://github.com/near-reality-com/provably-fair">View the source on GitHub</a></p>
+    </div>
+  </footer>
+  <script type="module" src="./js/mines.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Near Reality - Provably Fair Dice</title>
+  <meta name="description" content="Verify a Near Reality dice roll from client seed, revealed server seed, and nonce.">
+  <link rel="icon" href="./assets/nav-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./">
+        <img src="./assets/nav-logo.png" alt="Near Reality">
+        <span class="brand-copy">
+          <strong>Near Reality</strong>
+          <span>Provably fair dice</span>
+        </span>
+      </a>
+      <nav>
+        <a href="./">Home</a>
+        <a class="active" href="./dice.html">Dice</a>
+        <a href="./mines.html">Mines</a>
+        <a href="https://github.com/near-reality-com/provably-fair" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <p class="kicker">Dice</p>
+        <h1>Provably fair dice roll</h1>
+        <p class="lede">
+          Paste the revealed server seed, your client seed, and the nonce from the fairness panel.
+          The roll is a deterministic value from 00.00 to 100.00.
+        </p>
+      </section>
+
+      <section class="panel">
+        <form id="dice-form" class="grid" autocomplete="off">
+          <label>Client seed
+            <input id="client" type="text" required placeholder="Your client seed">
+          </label>
+          <label>Server seed (revealed)
+            <input id="server" type="text" required spellcheck="false" placeholder="64-character hex">
+          </label>
+          <label>Nonce (game #)
+            <input id="nonce" type="number" min="0" step="1" value="0" required>
+          </label>
+          <label>Published server hash (optional)
+            <input id="hash" type="text" spellcheck="false" placeholder="SHA-256 of the server seed">
+          </label>
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Verify roll</button>
+            <button class="btn btn-ghost" id="copy-link" type="button">Copy link</button>
+          </div>
+        </form>
+        <div id="status" class="status" hidden></div>
+      </section>
+
+      <section id="result" class="result" hidden>
+        <div id="roll" class="roll"></div>
+        <div class="proof">
+          <div>
+            <strong>SHA-256(server seed)</strong>
+            <span id="server-hash" class="meta"></span>
+          </div>
+          <div>
+            <strong>Result digest</strong>
+            <span id="digest" class="meta"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes">
+        <p>
+          Algorithm: <code>digest = SHA-256(client_seed:server_seed:nonce)</code>.
+          Take the first 4 bytes as an unsigned 32-bit integer, then
+          <code>roll = ((uint32 * 10001) / 2^32) / 100</code>.
+          This is multiply/divide, not modulo, so the 10,001 outcomes stay unbiased.
+        </p>
+        <p>
+          Query params: <code>client_seed</code>, <code>server_seed</code>, <code>nonce</code>, <code>hash</code>.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Runs entirely in your browser. Same math as <code>CasinoFairness.verifyDiceRoll</code>.</p>
+      <p><a href="https://github.com/near-reality-com/provably-fair">View the source on GitHub</a></p>
+    </div>
+  </footer>
+  <script type="module" src="./js/dice.js"></script>
+</body>
+</html>

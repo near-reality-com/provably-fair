@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Near Reality - Provably Fair</title>
+  <meta name="description" content="Independent dice and mines verifiers for Near Reality casino games.">
+  <link rel="icon" href="./assets/nav-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./">
+        <img src="./assets/nav-logo.png" alt="Near Reality">
+        <span class="brand-copy">
+          <strong>Near Reality</strong>
+          <span>Provably fair verifiers</span>
+        </span>
+      </a>
+      <nav>
+        <a class="active" href="./">Home</a>
+        <a href="./dice.html">Dice</a>
+        <a href="./mines.html">Mines</a>
+        <a href="https://github.com/near-reality-com/provably-fair" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <p class="kicker">Open source</p>
+        <h1>Verify a dice roll or mines layout yourself.</h1>
+        <p class="lede">
+          After a server seed is revealed, paste the same inputs used in-game.
+          These pages run the Near Reality algorithm in your browser and never send the seeds anywhere.
+        </p>
+      </section>
+
+      <div class="cards">
+        <a class="card" href="./dice.html">
+          <p class="kicker">00.00 - 100.00</p>
+          <h2>Dice verifier</h2>
+          <p>Reproduce a roll from client seed, revealed server seed, and nonce.</p>
+        </a>
+        <a class="card" href="./mines.html">
+          <p class="kicker">5 x 5 grid</p>
+          <h2>Mines verifier</h2>
+          <p>Reveal the mine tiles for a finished round and compare them to the board you played.</p>
+        </a>
+      </div>
+
+      <section class="notes">
+        <p>
+          Both games commit to <code>SHA-256(server seed)</code> before you play.
+          When the seed is later revealed, the hash must match that commitment and the outcome must match these pages.
+        </p>
+        <p>
+          Source: <a href="https://github.com/near-reality-com/provably-fair">github.com/near-reality-com/provably-fair</a>.
+          Java original: <code>com.near_reality.content.fairness.CasinoFairness</code>.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Near-Reality.com is owned and operated by Unity Games Studio, LLC.</p>
+      <p>These verifiers run locally in your browser. MIT licensed.</p>
+    </div>
+  </footer>
+</body>
+</html>

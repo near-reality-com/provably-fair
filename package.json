@@ -1,0 +1,9 @@
+{
+  "name": "@near-reality/provably-fair",
+  "private": true,
+  "type": "module",
+  "description": "Public Near Reality dice and mines provably-fair verifiers.",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}
