@@ -1,0 +1,5 @@
+# Only Stan (@dosier) may change GitHub Actions workflows.
+# Enforcement needs a GitHub Team path ruleset (this org is on Free,
+# so CODEOWNERS is the standing owner record until that is available).
+/.github/workflows/ @dosier
+/.github/CODEOWNERS @dosier
